@@ -71,13 +71,13 @@ def tobs():
         filter(Measurement.station == 'USC00519281').\
         filter(Measurement.date >= year_ago).all()
     session.close()
-    temp = list(np.ravel(query3))
-    return jsonify(temp = temp)
+    temperature = list(np.ravel(query3))
+    return jsonify(temperature = temperature)
 
 #Create the start route
 @app.route("/api/v1.0/start")
 def start():
-    start_date = dt.date(2014,12,25)
+    start_date = dt.date(2015,1,1)
     query4 = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs),
         func.avg(Measurement.tobs)).filter(Measurement.date >= start_date).all()
     session.close()
@@ -95,6 +95,6 @@ def end():
     start_end = list(np.ravel(query5))
     return jsonify(start_end = start_end)
 
-# Run through debugger
+# Run in debug mode
 if __name__ == "__main__":
     app.run(debug=True)
